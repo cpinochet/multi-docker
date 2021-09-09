@@ -12,14 +12,14 @@ script:
 
 after_success:
   - echo $TRAVIS_JOB_ID
-  - docker build -t cpinochet/multi-client ./client
+  - docker build -t cpinochet/multi-client:v5 ./client
   - docker build -t cpinochet/multi-nginx ./nginx
   - docker build -t cpinochet/multi-server ./server
   - docker build -t cpinochet/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push cpinochet/multi-client
+  - docker push cpinochet/multi-client:v5
   - docker push cpinochet/multi-nginx
   - docker push cpinochet/multi-server
   - docker push cpinochet/multi-worker
