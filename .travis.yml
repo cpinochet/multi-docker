@@ -11,6 +11,7 @@ script:
   - docker run -e CI=true cpinochet/react-test npm test
 
 after_success:
+  - echo $TRAVIS_JOB_ID
   - docker build -t cpinochet/multi-client ./client
   - docker build -t cpinochet/multi-nginx ./nginx
   - docker build -t cpinochet/multi-server ./server
