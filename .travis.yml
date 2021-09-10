@@ -11,16 +11,22 @@ script:
   - docker run -e CI=true cpinochet/react-test npm test
 
 after_success:
-  - echo "Travis Job id is $TRAVIS_JOB_ID"
-  - echo "Teavis comnit is $TRAVIS_COMMIT"
-  - docker build -t cpinochet/multi-client:v5 ./client
+  - echo "Travis_Job id is $TRAVIS_JOB_ID"
+  - echo "Travis_commit is $TRAVIS_COMMIT"
+  - STC=`echo ${TRAVIS_COMMIT::7}`
+  - export $STC
+  - echo $STC
+  - echo "Travis_pull_requet_sha is $TRAVIS_PULL_REQUEST_SHA"
+  - docker build -t cpinochet/multi-client:${STC} ./client
   - docker build -t cpinochet/multi-nginx ./nginx
   - docker build -t cpinochet/multi-server ./server
   - docker build -t cpinochet/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push cpinochet/multi-client:v5
+  - docker push cpinochet/multi-client:${STC}
+  - docker tag cpinochet/multi-client:${STC} cpinochet/multi-client:latest
+  - docker push cpinochet/multi-client:latest
   - docker push cpinochet/multi-nginx
   - docker push cpinochet/multi-server
   - docker push cpinochet/multi-worker
