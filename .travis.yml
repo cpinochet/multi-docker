@@ -30,15 +30,18 @@ after_success:
   - docker push cpinochet/multi-nginx
   - docker push cpinochet/multi-server
   - docker push cpinochet/multi-worker
+  - CURRENT_TAG=$(grep 'multi-client' Dockerrun.aws.json | awk -F ":" '{print $3}' | awk -F '"' '{print $1}')
+  - echo $CURRENT_TAG
+  - sed -i -r 's/'":$CURRENT_TAG"'/'":$STC"'/g' Dockerrun.aws.json
 
-# deploy:
-#   provider: elasticbeanstalk
-#   region: 'us-east-2'
-#   app: 'mi-cool-app'
-#   env: 'Micoolapp-env'
-#   bucket_name: 'elasticbeanstalk-us-east-2-613144825959'
-#   bucket_path: 'docker-multi'
-#   on:
-#     branch: master
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key: $AWS_SECRET_KEY
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-923445559289'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

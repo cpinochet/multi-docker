@@ -3,7 +3,7 @@
     "containerDefinitions": [
       {
         "name": "client",
-        "image": "cpinochet/multi-client",
+        "image": "cpinochet/multi-client:3f914f9",
         "hostname": "client",
         "essential": false,
         "memory": 128
