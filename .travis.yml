@@ -11,7 +11,8 @@ script:
   - docker run -e CI=true cpinochet/react-test npm test
 
 after_success:
-  - echo $TRAVIS_JOB_ID
+  - echo "Travis Job id is $TRAVIS_JOB_ID"
+  - echo "Teavis comnit is $TRAVIS_COMMIT"
   - docker build -t cpinochet/multi-client:v5 ./client
   - docker build -t cpinochet/multi-nginx ./nginx
   - docker build -t cpinochet/multi-server ./server
