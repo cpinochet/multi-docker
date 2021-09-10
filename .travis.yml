@@ -43,7 +43,7 @@ after_success:
   - CURRENT_TAG=$(grep 'multi-client' Dockerrun.aws.json | awk -F ":" '{print $3}' | awk -F '"' '{print $1}')
   - echo $CURRENT_TAG
   - sed -i -r 's/'":$CURRENT_TAG"'/'":$STC"'/g' Dockerrun.aws.json
-  - cat Dockerrun.aws.json | grep -i "$STC"
+  - cat Dockerrun.aws.json
 
 # deploy:
 #   provider: elasticbeanstalk
